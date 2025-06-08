@@ -1,3 +1,33 @@
+/**
+ * @file SPU_USRT.h
+ * @brief Lightweight cross-platform data frame protocol with buffered read/write operations over SPI. Refer to https://github.com/errorcodecritical/SPI_USRT.h
+ * @author Tobias M. H.
+ * @date June 2025
+ * @version 1.0.0
+ * 
+ * MIT License
+ * 
+ * Copyright (c) 2025 Tobias M. H. 
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #ifndef SPI_USRT_H
 #define SPI_USRT_H
 
@@ -246,7 +276,7 @@ static inline void spi_usrt_process(spi_usrt_t *usrt) {
 static inline spi_usrt_error_t spi_usrt_write(spi_usrt_t *usrt, const uint8_t *data, uint8_t length) {
     if (!usrt || !data || length == 0) return SPI_USRT_ERROR_INVALID_PARAM;
     
-    // Each write call creates exactly one frame - no mixing of commands
+    // Each write call creates exactly one frame - no mixing of messages
     if (!frame_queue_put((frame_queue_t*)&usrt->tx_queue, data, length)) {
         return SPI_USRT_ERROR_BUFFER_FULL;
     }
